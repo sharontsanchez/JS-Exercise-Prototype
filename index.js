@@ -39,16 +39,41 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-  
+function Person(name,age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = []; 
+}
+Person.prototype.eat = function(edible){
+  if(this.stomach.length<10){
+    this.stomach.push(edible);
+  }
+}
+Person.prototype.poop = function(){
+  this.stomach = [];
+}
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
 }
 
+// create my objects
+const cam = new Person('Cam', 20);
+const spencer = new Person ('Spencer', 28);
 
+console.log(cam.toString());
+console.log(spencer.toString());
 
+//eat 
+spencer.eat('pizza');
+spencer.eat('tacos');
+spencer.eat('sandwich');
+spencer.eat('bento box');
+spencer.eat('cake');
 
-
-
-
+console.log(spencer.stomach);
+// poop 
+spencer.poop();
+console.log(spencer.stomach);
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -63,11 +88,39 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-  
+function Car(model,milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
 }
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons;
+}
+// const honda = new Car ('Honda', 25);
+
+// console.log(honda.fill(25));
 
 
+
+// const drivablemiles = (this.tank * this.milesPerGallon);
+
+// Car.prototype.drive = function(distance){
+//   if (distance <= drivablemiles){
+//     this.odometer = this.odometer + distance;
+//     this.tank = this.tank - (distance/this.milesPerGallon);
+//   } else {
+//     this.tank = 0;
+//     this.odometer = this.odometer + drivablemiles;
+//     return `I ran out fuel at ${this.odometer} miles!`
+//   }
+
+// console.log(honda.drive(0));
+
+// }
+// Car.prototype.toString = function(){
+//   return `I ran out fuel at ${this.odometer} miles!`
+// }
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -75,18 +128,26 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
+function Baby(name,age,favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
  
 }
+Baby.prototype = Object.create(Person.prototype);
 
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
+const baby = new Baby ('Ria', '15 months','baby doll');
 
+console.log(baby.play());
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window/Global Object Binding: In the global scope, the valye of this will be the window/console object. If none of the other rules apply this will default to the window.
+  2. Implicit Binding: When the function is invoked, look to the left of the dot, thats what 'this' refers to. The 'this' keyword is assigned when we invoke the method. 
+  3. Explicit Binding: When the methods: call, apply or bind are used, this is explicitly defined. This allows you to execute a function in a different context.
+  4. New Binding: When a function is invoked as a constructor function using the new keyword 'this' points to the newly created object. The 'this' refers tot the specific instance of the object that is created and returned by the constructor function 
 */
 
 
