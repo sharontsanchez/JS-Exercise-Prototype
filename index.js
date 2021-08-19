@@ -95,32 +95,28 @@ function Car(model,milesPerGallon) {
   this.odometer = 0;
 }
 Car.prototype.fill = function(gallons){
-  this.tank = this.tank + gallons;
+ return this.tank = this.tank + gallons;
 }
-// const honda = new Car ('Honda', 25);
+const honda = new Car('Honda', 25);
+console.log(honda);
+console.log(honda.fill(100));
 
-// console.log(honda.fill(25));
 
 
+// 
 
-// const drivablemiles = (this.tank * this.milesPerGallon);
+Car.prototype.drive = function(distance){
+  const drivablemiles = (this.tank * this.milesPerGallon);
+  if (distance <= drivablemiles){
+    this.odometer = this.odometer + distance;
+    this.tank = this.tank - (distance/this.milesPerGallon);
+  } else {
+    this.tank = 0;
+    return `I ran out fuel at ${this.odometer} miles!`
+  }
+}
+console.log(honda.drive(200));
 
-// Car.prototype.drive = function(distance){
-//   if (distance <= drivablemiles){
-//     this.odometer = this.odometer + distance;
-//     this.tank = this.tank - (distance/this.milesPerGallon);
-//   } else {
-//     this.tank = 0;
-//     this.odometer = this.odometer + drivablemiles;
-//     return `I ran out fuel at ${this.odometer} miles!`
-//   }
-
-// console.log(honda.drive(0));
-
-// }
-// Car.prototype.toString = function(){
-//   return `I ran out fuel at ${this.odometer} miles!`
-// }
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
